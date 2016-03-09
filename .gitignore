@@ -1,0 +1,7 @@
+*.pyc
+*.*~
+*.db
+mt/
+money_track_prePEP8.py
+templates/login.html
+

@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% if mess == 'general'%}
+    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+      <dl>
+      <dt>Categories:
+      <dd><select name="categories" >
+      {% for c in cat %}
+          <option value="{{ c }}" selected="selected">{{ c }} </option>
+      {% endfor %} 
+       </select>
+      <dt>Date: 
+      <dd><input type="date" name="mydate"> (Format required YYYY-mm-dd)
+      <dt>Description:
+      <dd><textarea name="item" rows=5 cols=40></textarea>
+      <dt>Amount: <input type="radio" name="currency" value="p" checked> £
+                  <input type="radio" name="currency" value="e"> €<br>
+      <dd><input type="text" size=30 name="amount"><p>
+      <dd><center><input type="submit" name = "submit" value="Add Expense"></center>
+      </dl>
+    </form>
+    {% endif%}  
+    {% if mess == 'general'%}
+    <form action="{{ url_for('month')}}" method=post >
+    <ul class=entries>
+    {% for t in range(entries | length) %}
+        {% for k,v in entries[t].items() %}
+            <input type="submit" name = "submit" value= "{{ k }}-2016 : {{ v }} £" >
+        {% endfor %}
+    {% endfor %}
+    </ul> 
+    </form>
+    {% endif %}
+    {% if mess == 'month'%}
+        <form action="{{ url_for('days')}}" method=post >
+        <input type="hidden" name="month" value="{{ mo }}">
+        <p align="center">Month {{ mo }} - 2016</p>
+        {% for t in range(totals | length)%}
+            
+            {% if t == 0 %}  
+                {% set o = 'st' %}
+            {% elif t == 1 %}  
+                {% set o = 'nd' %}
+            {% elif t == 2 %}  
+                {% set o = 'rd' %}
+            {% elif t > 2%}  
+                {% set o = 'th' %}
+            {% endif %}
+            <input type="submit" name = "submit" value= "{{ t + 1 }}{{o}}: {{ totals[t] }} £" style="text-align: center;">      
+        {% endfor %}
+        
+        <p align = "center" >Total of the month {{ totals | sum }} £</p>
+        <p align = "center" >The most expensive day was the {{ max_min[0] }} with {{ max_min[1] }} £</p>
+        <p align = "center" >The cheapest day was the {{ max_min[2] }} with {{ max_min[3] }} £</p>
+        <p align = "center" >Average on month: {{ (totals | sum / totals | length )| round(2, 'floor') }} £</p>
+        <p align = "center" >Average until today: {{ (totals | sum / max_min[4] )| round(2, 'floor') }} £</p>
+        </form>     
+    {% endif %}
+     <h6><center>Conversion GBP - EURO has been done with the value of 1 € = {{change}} £, scraped from https://it.finance.yahoo.com/valute/euro.
+     </center></h6>
+{% endblock %}

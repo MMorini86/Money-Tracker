@@ -1,0 +1,13 @@
+Food
+Rent
+Tube&Buses
+Train
+Fun (Parties, pubs, alchol)
+Sports
+Meals out
+Clothes
+Mobile
+Doctor
+Medicine
+Other
+

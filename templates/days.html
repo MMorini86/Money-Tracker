@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block body %}
+      <p aling="center"> 
+      Expense details for the {{dy}} of {{m}} 
+      <p>
+      {% for d in entries%}
+          N. {{d[0]}}: {{d[1]}} - {{d[2]}} --> {{d[3]}} {% if d[4] == 'p' %} £ {% elif d[4] == 'e' %} € {% endif %} <br>
+      {% endfor %}</p>
+{% endblock %}
